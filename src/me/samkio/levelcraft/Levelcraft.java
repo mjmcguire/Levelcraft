@@ -35,7 +35,7 @@ public class Levelcraft extends JavaPlugin {
 	public static File SlayExpFile = new File(maindirectory + datadirectory
 			+ "Slaying.exp");
 	public static File RangeExpFile = new File(maindirectory + datadirectory
-			+ "Slaying.exp");
+			+ "Ranging.exp");
 
 	public Levelcraft(PluginLoader pluginLoader, Server instance,
 			PluginDescriptionFile desc, File folder, File plugin,
@@ -70,6 +70,7 @@ public class Levelcraft extends JavaPlugin {
 		Settings.loadSlayer();
 		Settings.loadMine();
 		Settings.loadWhitelist();
+		Settings.loadRange();
 		
 		if (Settings.database.equalsIgnoreCase("flatfile")) {
 			

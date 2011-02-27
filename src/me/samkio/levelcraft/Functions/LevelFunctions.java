@@ -36,22 +36,24 @@ public class LevelFunctions {
 	public static double getExp(Player p, File file) {
 		String player = p.getName();
 		if (Settings.database.equalsIgnoreCase("flatfile")) {
-		Properties pro = new Properties();
-		
-		try {
-			FileInputStream in = new FileInputStream(file);
-			pro.load(in);
-			String string = pro.getProperty(player);
-			double experience = Double.parseDouble(string);
-			in.close();
-			double exp = roundTwoDecimals(experience);
-			return exp;
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		}}
+			Properties pro = new Properties();
+			try {
+				FileInputStream in = new FileInputStream(file);
+				pro.load(in);
+				String string = pro.getProperty(player);
+				double experience = Double.parseDouble(string);
+				in.close();
+				double exp = roundTwoDecimals(experience);
+				return exp;
+				} 
+			catch (IOException e) {
+				System.out.println(e.getMessage());
+				}
+			}
 		else if (Settings.database.equalsIgnoreCase("sqlite")){
 			double exp = DataSqlite.getLevel(p, "WoodcuttingExp");
-		}else if (Settings.database.equalsIgnoreCase("mysql")){
+		}
+		else if (Settings.database.equalsIgnoreCase("mysql")){
 			
 		}
 		return 0;

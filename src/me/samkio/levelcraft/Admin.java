@@ -52,7 +52,13 @@ public class Admin {
 					player.sendMessage(ChatColor.GOLD + "[LC]"
 							+ ChatColor.GREEN + " Set Experience successful!");
 					LevelFunctions.write(editor, newexp, Levelcraft.SlayExpFile);
-				} else {
+				}else if ((stat.equalsIgnoreCase("r")
+						|| stat.equalsIgnoreCase("range") || stat
+						.equalsIgnoreCase("ranging"))) {
+					player.sendMessage(ChatColor.GOLD + "[LC]"
+							+ ChatColor.GREEN + " Set Experience successful!");
+					LevelFunctions.write(editor, newexp, Levelcraft.RangeExpFile);
+				}else {
 					player.sendMessage(ChatColor.GOLD
 							+ "[LC]"
 							+ ChatColor.YELLOW

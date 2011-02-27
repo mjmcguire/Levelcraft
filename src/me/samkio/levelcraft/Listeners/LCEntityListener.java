@@ -24,8 +24,10 @@ public class LCEntityListener extends EntityListener{
 			return;
 		}
 		if (event instanceof EntityDamageByEntityEvent){
-			if(((EntityDamageByEntityEvent) event).getDamager() instanceof Player && Settings.enableSlayerLevel == true && event.getEntity() instanceof Monster){
-				Slayer.attack((EntityDamageByEntityEvent) event);
+			if(!(((EntityDamageByProjectileEvent) event).getProjectile() instanceof Arrow)){
+				if(((EntityDamageByEntityEvent) event).getDamager() instanceof Player && Settings.enableSlayerLevel == true && event.getEntity() instanceof Monster){
+					Slayer.attack((EntityDamageByEntityEvent) event);
+				}
 			}
 		}
 		if (event instanceof EntityDamageByProjectileEvent){

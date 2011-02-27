@@ -41,9 +41,9 @@ public class LCPlayerListener extends PlayerListener {
 	public static void About(Player player) {
 		player.sendMessage(ChatColor.GOLD + "[LC] ---LevelCraftPlugin By Samkio (C)2011--- ");
 		player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl list - Shows active stats.");
-		player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl [w|m|s] - Shows stats statisics.");
+		player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl [w|m|s|r] - Shows stats statisics.");
 		player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl notify - Toggles notifications.");
-		player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl unlocks [w|m|s] - Shows tool level unlocks.");
+		player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl unlocks [w|m|s|r] - Shows tool level unlocks.");
 		player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl or /level - Shows this.");
 	}
 

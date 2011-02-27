@@ -46,6 +46,13 @@ public class Settings {
 	public static double ExpPerNetherrack;
 
 	public static double ExpPerDamage;
+	
+	public static int Rangep5;
+	public static int Range1p0;
+	public static int Range1p5;	
+	public static int Range2p0;
+	public static int Range2p5;	
+	public static int Range3p0;
 
 	public static int StoneLevel;
 	public static int CobbleLevel;
@@ -159,6 +166,26 @@ public class Settings {
 		SlayGoldSword = properties.getInteger("Gold-Sword-Level", 20);
 		SlayDiamondSword = properties.getInteger("Diamond-Sword-Level", 30);
 		ExpPerDamage = properties.getDouble("Experience-per-1-damage", 2);
+
+		properties.save();
+	}
+
+	public static void loadRange() {
+		String propertiesFile = Levelcraft.maindirectory
+				+ Levelcraft.configdirectory + "RangeConfig.properties";
+		PropertyFunctions properties = new PropertyFunctions(propertiesFile);
+		try {
+			properties.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Rangep5 = properties.getInteger("Range-.5-Damage", 0);
+		Range1p0 = properties.getInteger("Range-1.0-Damage", 5);
+		Range1p5 = properties.getInteger("Range-1.5-Damage", 10);
+		Range2p0 = properties.getInteger("Range-2.0-Damage", 20);
+		Range2p5 = properties.getInteger("Range-2.5-Damage", 30);
+		Range3p0 = properties.getInteger("Range-3.0-Damage", 50);
 
 		properties.save();
 	}

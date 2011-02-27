@@ -4,6 +4,7 @@ package me.samkio.levelcraft.SamToolbox;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
@@ -47,11 +48,21 @@ public class DataSqlite {
 	public static void PrepareDB() {
 		Connection conn = null;
 		Statement st = null;
+		int maxcolumns = 5;                //Always update this when added new experience tree
 		try {
 			conn = getConnection();
 			st = conn.createStatement();
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS 'ExperienceTable' ('PlayerName' VARCHAR, 'WoodcuttingExp' INT ( 255 ) NOT NULL,'MiningExp' INT ( 255 ) NOT NULL,'SlayingExp' INT ( 255 ) NOT NULL ); CREATE INDEX playerIndex on ExperienceTable (PlayerName);");
-			conn.commit();
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS 'ExperienceTable' ('PlayerName' VARCHAR, 'WoodcuttingExp' INT ( 255 ) NOT NULL,'MiningExp' INT ( 255 ) NOT NULL,'SlayingExp' INT ( 255 ) NOT NULL,'RangingExp' INT ( 255 ) NOT NULL ); CREATE INDEX playerIndex on ExperienceTable (PlayerName);");
+			ResultSet rs = st.executeQuery("SELECT * FROM 'ExperienceTable';");
+		    ResultSetMetaData rsmd = rs.getMetaData();
+		    int numColumns = rsmd.getColumnCount();
+		    if (!(numColumns == maxcolumns)){
+		    	//database is old we need to add the new columns
+		    	if(numColumns==4){
+		    		st.executeUpdate("ALTER TABLE 'ExperienceTable' ADD COLUMN 'RangingExp' INT ( 255 )  NOT NULL;");
+		    	}
+		    }
+		    conn.commit();
 		} catch (SQLException e) {
 			log.severe("[Levelcraft] Unable to prepare database");
 		}
@@ -64,7 +75,7 @@ public class DataSqlite {
 		try {
 			conn = getConnection();
 			st = conn.createStatement();
-			st.executeUpdate("INSERT INTO ExperienceTable (PlayerName,WoodcuttingExp,MiningExp,SlayingExp) VALUES ('"
+			st.executeUpdate("INSERT INTO ExperienceTable (PlayerName,WoodcuttingExp,MiningExp,SlayingExp,Ranging) VALUES ('"
 					+ p + "'," + var + "," + var + "," + var + ")");
 			conn.commit();
 		} catch (SQLException e) {
