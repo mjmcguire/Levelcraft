@@ -40,7 +40,7 @@ public class Levelcraft extends JavaPlugin {
 	public Levelcraft(PluginLoader pluginLoader, Server instance,
 			PluginDescriptionFile desc, File folder, File plugin,
 			ClassLoader cLoader) {
-		super(pluginLoader, instance, desc, folder, plugin, cLoader);
+		super();
 	}
 
 	@Override
@@ -98,9 +98,9 @@ public class Levelcraft extends JavaPlugin {
 
 		pm.registerEvent(Event.Type.PLAYER_COMMAND, this.playerListener,
 				Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_DAMAGEDBY_ENTITY,
+		pm.registerEvent(Event.Type.ENTITY_DAMAGED,
 				this.entityListener, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_DAMAGEDBY_PROJECTILE,
+		pm.registerEvent(Event.Type.ENTITY_TARGET,
 				this.entityListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.PLAYER_JOIN, this.playerListener,
 				Event.Priority.Normal, this);

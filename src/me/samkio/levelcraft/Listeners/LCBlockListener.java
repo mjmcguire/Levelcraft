@@ -17,8 +17,7 @@ public class LCBlockListener extends BlockListener {
 
 	public void onBlockDamage(BlockDamageEvent event) {
 		
-		if ((event.getDamageLevel() == BlockDamageLevel.BROKEN)
-				&& (!event.isCancelled()) && Whitelist.isAvoid(event.getPlayer().getName()) == false) {
+		if ((!event.isCancelled()) && (event.getDamageLevel() == BlockDamageLevel.STOPPED)&&(Whitelist.isAvoid(event.getPlayer().getName()) == false)) {
 			
 			  Wood.Destroy(event);
 			  Mine.Destroy(event);
