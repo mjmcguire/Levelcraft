@@ -55,7 +55,7 @@ public class Levelcraft extends JavaPlugin {
 	public void onEnable() {
 		load();
 		registerEvents();
-
+         //Enable
 		PluginDescriptionFile pdfFile = this.getDescription();
 		System.out.println(pdfFile.getName() + " version "
 				+ pdfFile.getVersion() + " is enabled!");
