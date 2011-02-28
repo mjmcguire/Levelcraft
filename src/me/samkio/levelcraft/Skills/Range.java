@@ -2,6 +2,11 @@ package me.samkio.levelcraft.Skills;
 
 import java.util.logging.Logger;
 
+<<<<<<< HEAD
+=======
+import me.samkio.levelcraft.Levelcraft;
+import me.samkio.levelcraft.Settings;
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 import me.samkio.levelcraft.Functions.LevelFunctions;
 import me.samkio.levelcraft.Functions.PlayerFunctions;
 import me.samkio.levelcraft.SamToolbox.DataMySql;
@@ -12,9 +17,12 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 
+<<<<<<< HEAD
 import samkio.levelcraft.Levelcraft;
 import samkio.levelcraft.Settings;
 
+=======
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 public class Range {
 	public static void attack(EntityDamageByProjectileEvent event) {
 		Player player = (Player) event.getDamager();

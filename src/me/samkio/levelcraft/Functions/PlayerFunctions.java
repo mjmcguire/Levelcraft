@@ -2,6 +2,14 @@ package me.samkio.levelcraft.Functions;
 
 import java.util.HashMap;
 
+<<<<<<< HEAD
+=======
+import me.samkio.levelcraft.Admin;
+import me.samkio.levelcraft.Help;
+import me.samkio.levelcraft.Levelcraft;
+import me.samkio.levelcraft.Settings;
+import me.samkio.levelcraft.Whitelist;
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 import me.samkio.levelcraft.SamToolbox.DataMySql;
 import me.samkio.levelcraft.SamToolbox.DataSqlite;
 import me.samkio.levelcraft.SamToolbox.Toolbox;
@@ -9,12 +17,15 @@ import me.samkio.levelcraft.SamToolbox.Toolbox;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+<<<<<<< HEAD
 import samkio.levelcraft.Admin;
 import samkio.levelcraft.Help;
 import samkio.levelcraft.Levelcraft;
 import samkio.levelcraft.Settings;
 import samkio.levelcraft.Whitelist;
 
+=======
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 
 public class PlayerFunctions {
 	private final static HashMap<Player, Boolean> NotifyUsers = new HashMap<Player, Boolean>();

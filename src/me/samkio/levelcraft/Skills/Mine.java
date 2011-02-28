@@ -1,5 +1,10 @@
 package me.samkio.levelcraft.Skills;
 
+<<<<<<< HEAD
+=======
+import me.samkio.levelcraft.Levelcraft;
+import me.samkio.levelcraft.Settings;
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 import me.samkio.levelcraft.Functions.LevelFunctions;
 import me.samkio.levelcraft.Functions.PlayerFunctions;
 import me.samkio.levelcraft.SamToolbox.DataMySql;
@@ -10,9 +15,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockDamageEvent;
 
+<<<<<<< HEAD
 import samkio.levelcraft.Levelcraft;
 import samkio.levelcraft.Settings;
 
+=======
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 
 public class Mine {
 

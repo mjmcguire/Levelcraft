@@ -6,11 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
+<<<<<<< HEAD
 
 import org.bukkit.entity.Player;
 
 import samkio.levelcraft.Settings;
 
+=======
+import me.samkio.levelcraft.Settings;
+
+import org.bukkit.entity.Player;
+
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 import com.mysql.jdbc.ResultSetMetaData;
 import com.mysql.jdbc.Statement;
 

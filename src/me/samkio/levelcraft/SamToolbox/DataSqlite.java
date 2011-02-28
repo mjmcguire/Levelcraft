@@ -9,12 +9,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
 
+<<<<<<< HEAD
 
 import org.bukkit.entity.Player;
 
 import samkio.levelcraft.Levelcraft;
 import samkio.levelcraft.Settings;
 
+=======
+import me.samkio.levelcraft.Levelcraft;
+import me.samkio.levelcraft.Settings;
+
+import org.bukkit.entity.Player;
+
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 
 public class DataSqlite {
 	private static Connection connection;
