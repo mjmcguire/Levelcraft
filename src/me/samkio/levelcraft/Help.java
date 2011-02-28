@@ -24,8 +24,11 @@ public class Help {
 		if( Settings.enableSlayerLevel == true){
 			list = list + "Slaying(S),";
 		}
-		if( Settings.enableSlayerLevel == true){
+		if( Settings.enableRangeLevel == true){
 			list = list + "Ranging(R),";
+		}
+		if( Settings.enableFisticuffsLevel == true){
+			list = list + "Fisticuffs(F),";
 		}
       player.sendMessage(list);
 
@@ -45,6 +48,9 @@ public static void shout(Player player,String string){
 		plugin.getServer().broadcastMessage(ChatColor.GOLD + "[AC]" + ChatColor.WHITE+ "You have been taxed.");
 	}else if ((string.equalsIgnoreCase("range") ||string.equalsIgnoreCase("r") || string.equalsIgnoreCase("ranging")) && Settings.enableRangeLevel==true)   {
 		level = LevelFunctions.getLevel(player, Levelcraft.RangeExpFile);
+		plugin.getServer().broadcastMessage(ChatColor.GOLD + "[AC]" + ChatColor.WHITE+ "You have been taxed.");
+	}else if ((string.equalsIgnoreCase("Fist") ||string.equalsIgnoreCase("F") || string.equalsIgnoreCase("Fisticuffs")) && Settings.enableFisticuffsLevel==true)   {
+		level = LevelFunctions.getLevel(player, Levelcraft.FisticuffsExpFile);
 		plugin.getServer().broadcastMessage(ChatColor.GOLD + "[AC]" + ChatColor.WHITE+ "You have been taxed.");
 	}
 	else{
@@ -75,7 +81,7 @@ public static void shout(Player player,String string){
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " IronSword: "+ Settings.SlayIronSword);
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " GoldSword: "+ Settings.SlayGoldSword);
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " DiamondSword: "+ Settings.SlayDiamondSword);
-		}else if ((split[2].equalsIgnoreCase("slay") ||split[2].equalsIgnoreCase("s") || split[2].equalsIgnoreCase("slaying")) && Settings.enableSlayerLevel==true)   {
+		}else if ((split[2].equalsIgnoreCase("range") ||split[2].equalsIgnoreCase("r") || split[2].equalsIgnoreCase("ranging")) && Settings.enableSlayerLevel==true)   {
 			player.sendMessage(ChatColor.GOLD + "[LC] ---LevelCraftPlugin By Samkio--- ");
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " 0.5 Damage per Arrow: "+ Settings.Rangep5);
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " 1.0 Damage per Arrow: "+ Settings.Range1p0);
@@ -83,6 +89,13 @@ public static void shout(Player player,String string){
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " 2.0 Damage per Arrow: "+ Settings.Range2p0);
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " 2.5 Damage per Arrow: "+ Settings.Range2p5);
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " 3.0 Damage per Arrow: "+ Settings.Range3p0);
+		}else if ((split[2].equalsIgnoreCase("fist") ||split[2].equalsIgnoreCase("f") || split[2].equalsIgnoreCase("fisticuffs")) && Settings.enableSlayerLevel==true)   {
+			player.sendMessage(ChatColor.GOLD + "[LC] ---LevelCraftPlugin By Samkio--- ");
+			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " WoodenSword: "+ Settings.FisticuffsWoodSword);
+			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " StoneSword: "+ Settings.FisticuffsStoneSword);
+			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " IronSword: "+ Settings.FisticuffsIronSword);
+			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " GoldSword: "+ Settings.FisticuffsGoldSword);
+			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN + " DiamondSword: "+ Settings.FisticuffsDiamondSword);
 		}else{
 			player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " Stat not found.");
 			player.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " Please type '/level list' to show all stats.");

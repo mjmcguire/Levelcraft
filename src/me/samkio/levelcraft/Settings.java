@@ -10,6 +10,7 @@ public class Settings {
 	public static boolean enableMineLevel;
 	public static boolean enableRangeLevel;
 	public static boolean enableSlayerLevel;
+	public static boolean enableFisticuffsLevel;
 	public static int WCWoodAxe;
 	public static int WCStoneAxe;
 	public static int WCIronAxe;
@@ -21,6 +22,12 @@ public class Settings {
 	public static int SlayIronSword;
 	public static int SlayGoldSword;
 	public static int SlayDiamondSword;
+	
+	public static int FisticuffsWoodSword;
+	public static int FisticuffsStoneSword;
+	public static int FisticuffsIronSword;
+	public static int FisticuffsGoldSword;
+	public static int FisticuffsDiamondSword;
 
 	public static int MIWoodPick;
 	public static int MIStonePick;
@@ -91,6 +98,7 @@ public class Settings {
 		enableMineLevel = properties.getBoolean("Enable-Mining-Level", true);
 		enableSlayerLevel = properties.getBoolean("Enable-Slayer-Level", true);
 		enableRangeLevel = properties.getBoolean("Enable-Range-Level", true);
+		enableFisticuffsLevel = properties.getBoolean("Enable-Range-Level", true);
 		Constant = properties.getInteger("Level-Constant", 20);
 		database = properties.getString("Database", "flatfile");
 		MySqlDir = properties.getString("MySqlDatabaseDirectory", "localhost:3306/LC");
@@ -190,6 +198,24 @@ public class Settings {
 		properties.save();
 	}
 
+	public static void loadFisticuffs() {
+		String propertiesFile = Levelcraft.maindirectory
+				+ Levelcraft.configdirectory + "FisticuffsConfig.properties";
+		PropertyFunctions properties = new PropertyFunctions(propertiesFile);
+		try {
+			properties.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		FisticuffsWoodSword = properties.getInteger("Fisticuffs-Wooden-Sword-Level", 0);
+		FisticuffsStoneSword = properties.getInteger("Fisticuffs-Stone-Sword-Level", 5);
+		FisticuffsIronSword = properties.getInteger("Fisticuffs-Iron-Sword-Level", 10);
+		FisticuffsGoldSword = properties.getInteger("Fisticuffs-Gold-Sword-Level", 20);
+		FisticuffsDiamondSword = properties.getInteger("Fisticuffs-Diamond-Sword-Level", 30);
+
+		properties.save();
+	}
 	public static void loadMine() {
 		String propertiesFile = Levelcraft.maindirectory
 				+ Levelcraft.configdirectory + "MiningConfig.properties";

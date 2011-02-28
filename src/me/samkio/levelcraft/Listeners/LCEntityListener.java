@@ -3,6 +3,7 @@ package me.samkio.levelcraft.Listeners;
 
 import me.samkio.levelcraft.Levelcraft;
 import me.samkio.levelcraft.Settings;
+import me.samkio.levelcraft.Skills.Fisticuffs;
 import me.samkio.levelcraft.Skills.Range;
 import me.samkio.levelcraft.Skills.Slayer;
 
@@ -32,6 +33,14 @@ public class LCEntityListener extends EntityListener{
 		if (event instanceof EntityDamageByEntityEvent){
 				if(((EntityDamageByEntityEvent) event).getDamager() instanceof Player && Settings.enableSlayerLevel == true && event.getEntity() instanceof Monster){
 					Slayer.attack((EntityDamageByEntityEvent) event);
+					return;
+				} else if(((EntityDamageByEntityEvent) event).getDamager() instanceof Player && Settings.enableSlayerLevel == true && event.getEntity() instanceof Player){
+					Player Damager = (Player) ((EntityDamageByEntityEvent) event).getDamager();
+					Player Damagee = (Player) event.getEntity();
+					if(!(Damager.getName()==Damagee.getName())){
+						Fisticuffs.attack((EntityDamageByEntityEvent) event);
+					}
+					return;
 				}
 			}
 		}
