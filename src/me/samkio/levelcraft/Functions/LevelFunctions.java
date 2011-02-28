@@ -8,6 +8,10 @@ import java.text.DecimalFormat;
 import java.util.Properties;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import me.samkio.levelcraft.Settings;
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 =======
 import me.samkio.levelcraft.Settings;
 >>>>>>> parent of 9a92e9f... Whitelist Modified again.
@@ -16,8 +20,11 @@ import me.samkio.levelcraft.SamToolbox.DataSqlite;
 import org.bukkit.entity.Player;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import samkio.levelcraft.Settings;
 
+=======
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 =======
 >>>>>>> parent of 9a92e9f... Whitelist Modified again.
 

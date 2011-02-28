@@ -1,6 +1,11 @@
 package me.samkio.levelcraft.Skills;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import me.samkio.levelcraft.Levelcraft;
+import me.samkio.levelcraft.Settings;
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 =======
 import me.samkio.levelcraft.Levelcraft;
 import me.samkio.levelcraft.Settings;
@@ -15,9 +20,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import samkio.levelcraft.Levelcraft;
 import samkio.levelcraft.Settings;
 
+=======
+>>>>>>> parent of 9a92e9f... Whitelist Modified again.
 =======
 >>>>>>> parent of 9a92e9f... Whitelist Modified again.
 public class Fisticuffs {
