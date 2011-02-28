@@ -176,6 +176,10 @@ public class Mine {
 
 					stat = stat + Settings.ExpPerRedstone;
 				}
+                                if (event.getBlock().getType() == Material.GLOWING_REDSTONE_ORE) {
+
+					stat = stat + Settings.ExpPerRedstone;
+				}
 				if (event.getBlock().getType() == Material.NETHERRACK) {
 
 					stat = stat + Settings.ExpPerNetherrack;
