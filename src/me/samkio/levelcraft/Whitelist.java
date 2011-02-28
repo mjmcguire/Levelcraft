@@ -7,6 +7,7 @@ public class Whitelist {
 		for (int i = 0; i < Settings.LCAdmins.length; i++) {
 			if (Settings.LCAdmins[i].equalsIgnoreCase(player)) {
 				return true;
+break;
 			} 
 		}
 		return false;
@@ -16,6 +17,7 @@ public class Whitelist {
 		for (int i = 0; i < Settings.LCAvoiders.length; i++) {
 			if (Settings.LCAvoiders[i].equalsIgnoreCase(player)) {
 				return true;
+break;
 			}
 		}
 		return false;
