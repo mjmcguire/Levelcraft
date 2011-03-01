@@ -18,6 +18,10 @@ public class LCPlayerListener extends PlayerListener {
 	}
 
 	public void onPlayerCommand(PlayerChatEvent event) {
+		if (event.isCancelled()){
+			return;
+		}
+
 		String[] split = event.getMessage().split(" ");
 		Player player = event.getPlayer();
 		PlayerFunctions.checkAccount(player);
