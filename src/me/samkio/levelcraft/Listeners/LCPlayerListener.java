@@ -25,7 +25,7 @@ public class LCPlayerListener extends PlayerListener {
 				|| split[0].equalsIgnoreCase("/lvl")) {
 
 			if (split.length >= 2) {
-				PlayerFunctions.doThis(player, split);
+				PlayerFunctions.doThis(player, split, plugin);
 			} else {
 				About(player);
 

@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 public class PlayerFunctions {
 	private final static HashMap<Player, Boolean> NotifyUsers = new HashMap<Player, Boolean>();
 
-	public static void doThis(Player player, String[] split) {
+	public static void doThis(Player player, String[] split, Levelcraft plugin) {
 		if ((split[1].equalsIgnoreCase("wc")
 				|| split[1].equalsIgnoreCase("wood")
 				|| split[1].equalsIgnoreCase("woodcut") || split[1]
@@ -51,7 +51,7 @@ public class PlayerFunctions {
 		} else if (split[1].equalsIgnoreCase("notify")) {
 			toggleNotify(player);
 		} else if (split[1].equalsIgnoreCase("shout") && split.length >= 3) {
-			Help.shout(player, split[2]);
+			Help.shout(player, split[2], plugin);
 		} else if ((split[1].equalsIgnoreCase("all"))) {
 			int level = 0;
 			int level2 = 0;
