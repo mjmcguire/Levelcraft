@@ -5,25 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 import org.bukkit.entity.Player;
-
-import samkio.levelcraft.Settings;
-
-=======
-=======
->>>>>>> parent of 9a92e9f... Whitelist Modified again.
 import me.samkio.levelcraft.Settings;
-
 import org.bukkit.entity.Player;
-
-<<<<<<< HEAD
->>>>>>> parent of 9a92e9f... Whitelist Modified again.
-=======
->>>>>>> parent of 9a92e9f... Whitelist Modified again.
 import com.mysql.jdbc.ResultSetMetaData;
 import com.mysql.jdbc.Statement;
 
