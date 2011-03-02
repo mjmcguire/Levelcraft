@@ -14,8 +14,8 @@ import me.samkio.levelcraft.SamToolbox.DataSqlite;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
@@ -42,6 +42,8 @@ public class Levelcraft extends JavaPlugin {
 			+ "Ranging.exp");
 	public static File FisticuffsExpFile = new File(maindirectory + datadirectory
 			+ "Fisticuffs.exp");
+	public static File ArcherExpFile = new File(maindirectory + datadirectory
+			+ "Archer.exp");
 
 	public Levelcraft(PluginLoader pluginLoader, Server instance,
 			PluginDescriptionFile desc, File folder, File plugin,
@@ -65,15 +67,18 @@ public class Levelcraft extends JavaPlugin {
 				+ pdfFile.getVersion() + " is enabled!");
 
 	}
-
+/*
+ * I have no idea what you guys are trying to do, but I took this out because commands don't work now -Bill
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-    	PlayerFunctions.checkAccount(sender);
+    	if (sender instanceof Player){
+        	PlayerFunctions.checkAccount((Player) sender);    		
+    	}
     	if (commandLabel.equalsIgnoreCase("level") | commandLabel.equalsIgnoreCase("lvl")) {
     		return true;
     	}
     	return false;
     }
-    
+*/    
 //    public boolean onCommand(CommandSender sender, Command cmd,
 //    		   String commandLabel, String[] args) {
 //    		  if ((commandLabel.equalsIgnoreCase("yt") || commandLabel
@@ -100,6 +105,7 @@ public class Levelcraft extends JavaPlugin {
 		Settings.loadWhitelist();
 		Settings.loadRange();
 		Settings.loadFisticuffs();
+		Settings.loadArcher();
 		
 		if (Settings.database.equalsIgnoreCase("flatfile")) {
 			
@@ -111,6 +117,7 @@ public class Levelcraft extends JavaPlugin {
 					SlayExpFile.createNewFile();
 					RangeExpFile.createNewFile();
 					FisticuffsExpFile.createNewFile();
+					ArcherExpFile.createNewFile();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -126,7 +133,9 @@ public class Levelcraft extends JavaPlugin {
 
 	void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
-	
+//add the following event back, remove when onCommand stuff is complete - Bill		
+		pm.registerEvent(Event.Type.PLAYER_COMMAND, this.playerListener,
+				         Event.Priority.Normal, this); 	
 		pm.registerEvent(Event.Type.ENTITY_DAMAGED,
 				this.entityListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.ENTITY_TARGET,

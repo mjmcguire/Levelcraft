@@ -31,38 +31,38 @@ public class Range {
 				stat = DataMySql.getExp(player, "RangingExp");
 				level = DataMySql.getLevel(player, "RangingExp");
 			}
-			if (level > Settings.Rangep5 && level < Settings.Range1p0) {
+			if (level >= Settings.Rangep5 && level < Settings.Range1p0) {
+				newhealth = (monster.getHealth()+3);
+				if(newhealth<=0){
+					newhealth=0;
+				}
+				monster.setHealth(newhealth);
+			}else if(level >= Settings.Range1p0 && level < Settings.Range1p5){
+				newhealth = (monster.getHealth()+2);
+				if(newhealth<=0){
+					newhealth=0;
+				}
+				monster.setHealth(newhealth);
+			}else if(level >= Settings.Range1p5 && level < Settings.Range2p0){
+				newhealth = (monster.getHealth()+1);
+				if(newhealth<=0){
+					newhealth=0;
+				}
+				monster.setHealth(newhealth);
+			}else if(level >= Settings.Range2p0 && level < Settings.Range2p5){
+				newhealth = (monster.getHealth());
+				if(newhealth<=0){
+					newhealth=0;
+				}
+				monster.setHealth(newhealth);
+			}else if(level >= Settings.Range2p5 && level < Settings.Range3p0){
 				newhealth = (monster.getHealth()-1);
 				if(newhealth<=0){
 					newhealth=0;
 				}
 				monster.setHealth(newhealth);
-			}else if(level > Settings.Range1p0 && level < Settings.Range1p5){
+			}else if(level >= Settings.Range3p0){
 				newhealth = (monster.getHealth()-2);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				monster.setHealth(newhealth);
-			}else if(level > Settings.Range1p5 && level < Settings.Range2p0){
-				newhealth = (monster.getHealth()-3);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				monster.setHealth(newhealth);
-			}else if(level > Settings.Range2p0 && level < Settings.Range2p5){
-				newhealth = (monster.getHealth()-4);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				monster.setHealth(newhealth);
-			}else if(level > Settings.Range2p5 && level < Settings.Range3p0){
-				newhealth = (monster.getHealth()-5);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				monster.setHealth(newhealth);
-			}else if(level > Settings.Range3p0){
-				newhealth = (monster.getHealth()-6);
 				if(newhealth<=0){
 					newhealth=0;
 				}

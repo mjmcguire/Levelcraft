@@ -9,6 +9,7 @@ import me.samkio.levelcraft.Settings;
 import me.samkio.levelcraft.Whitelist;
 import me.samkio.levelcraft.SamToolbox.DataMySql;
 import me.samkio.levelcraft.SamToolbox.DataSqlite;
+import me.samkio.levelcraft.SamToolbox.Level;
 import me.samkio.levelcraft.SamToolbox.Toolbox;
 
 import org.bukkit.ChatColor;
@@ -42,7 +43,11 @@ public class PlayerFunctions {
 				|| split[1].equalsIgnoreCase("f") || split[1].equalsIgnoreCase("fisticuffs"))
 				&& Settings.enableFisticuffsLevel == true) {
 			showStat(player, "f"); 
-		}else if (split[1].equalsIgnoreCase("list")) {
+		} else if ((split[1].equalsIgnoreCase("archer")
+				|| split[1].equalsIgnoreCase("a") || split[1].equalsIgnoreCase("archery"))
+				&& Settings.enableArcherLevel == true) {
+			showStat(player, "a");
+		} else if (split[1].equalsIgnoreCase("list")) {
 			Help.ListLevels(player);
 		} else if (split[1].equalsIgnoreCase("admin")
 				&& Whitelist.isAdmin(player.getName()) == true
@@ -58,46 +63,25 @@ public class PlayerFunctions {
 			int level3 = 0;
 			int level4 = 0;
 			int level5 = 0;
+			int level6 = 0;
 			double mineexp = 0;
 			double slayexp = 0;
 			double wcexp = 0;
 			double rangexp = 0;
 			double fisticuffsexp = 0;
-			if (Settings.database.equalsIgnoreCase("flatfile")) {
-				level = LevelFunctions.getLevel(player, Levelcraft.MiExpFile);
-				level2 = LevelFunctions
-						.getLevel(player, Levelcraft.SlayExpFile);
-				level3 = LevelFunctions.getLevel(player, Levelcraft.WCExpFile);
-				level4 = LevelFunctions.getLevel(player, Levelcraft.RangeExpFile);
-				level5 = LevelFunctions.getLevel(player, Levelcraft.FisticuffsExpFile);
-				mineexp = LevelFunctions.getExp(player, Levelcraft.MiExpFile);
-				slayexp = LevelFunctions.getExp(player, Levelcraft.SlayExpFile);
-				wcexp = LevelFunctions.getExp(player, Levelcraft.WCExpFile);
-				rangexp = LevelFunctions.getExp(player, Levelcraft.RangeExpFile);
-				fisticuffsexp = LevelFunctions.getExp(player, Levelcraft.FisticuffsExpFile);
-			}else if (Settings.database.equalsIgnoreCase("sqlite")) {
-				level3 = DataSqlite.getLevel(player, "WoodcuttingExp");
-				level = DataSqlite.getLevel(player, "MiningExp");
-				level2 = DataSqlite.getLevel(player, "SlayingExp");
-				level4 = DataSqlite.getLevel(player, "RangingExp");
-				level5 = DataSqlite.getLevel(player, "FisticuffsExp");
-				mineexp = DataSqlite.getExp(player, "MiningExp");
-				slayexp = DataSqlite.getExp(player, "SlayingExp");
-				wcexp = DataSqlite.getExp(player, "WoodcuttingExp");
-				rangexp = DataSqlite.getExp(player, "RangingExp");
-				fisticuffsexp = DataSqlite.getExp(player, "FisticuffsExp");
-			}else if (Settings.database.equalsIgnoreCase("mysql")) {
-				level = DataMySql.getLevel(player, "MiningExp");
-				level2 = DataMySql.getLevel(player, "SlayingExp");
-				level3 = DataMySql.getLevel(player, "WoodcuttingExp");
-				level4 = DataMySql.getLevel(player, "RangingExp");
-				level5 = DataMySql.getLevel(player, "FisticuffsExp");
-				mineexp = DataMySql.getExp(player, "MiningExp");
-				slayexp = DataMySql.getExp(player, "SlayingExp");
-				wcexp = DataMySql.getExp(player, "WoodcuttingExp");
-				rangexp = DataMySql.getExp(player, "RangingExp");
-				fisticuffsexp = DataMySql.getExp(player, "FisticuffsExp");				
-			}
+			double archeryexp = 0;
+			level = Level.getLevel(player, "m");
+			level2 = Level.getLevel(player, "s");
+			level3 = Level.getLevel(player, "w");
+			level4 = Level.getLevel(player, "r");
+			level5 = Level.getLevel(player, "f");
+			level6 = Level.getLevel(player, "a");
+			mineexp = Level.getExp(player, "m");
+			slayexp = Level.getExp(player, "s");
+			wcexp = Level.getExp(player, "w");
+			rangexp = Level.getExp(player, "r");
+			fisticuffsexp = Level.getExp(player, "f");
+			archeryexp = Level.getExp(player, "a");
 			player.sendMessage(ChatColor.GOLD
 					+ "[LC] ---LevelCraftPlugin By Samkio--- ");
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN
@@ -110,6 +94,8 @@ public class PlayerFunctions {
 					+ " (R): " + level4 + ". Exp:" + rangexp);
 			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN
 					+ " (F): " + level5 + ". Exp:" + fisticuffsexp);
+			player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.GREEN
+					+ " (A): " + level6 + ". Exp:" + archeryexp);
 		}
 
 		else if (split[1].equalsIgnoreCase("unlocks")) {
@@ -183,96 +169,36 @@ public class PlayerFunctions {
 		double stat = 0;
 		double expLeft = 0;
 		String str = "NULL";
-		if (Settings.database.equalsIgnoreCase("flatfile")
-				&& string.equalsIgnoreCase("W")) {
-			level = LevelFunctions.getLevel(player, Levelcraft.WCExpFile);
-			stat = LevelFunctions.getExp(player, Levelcraft.WCExpFile);
-			expLeft = LevelFunctions.getExpLeft(player, Levelcraft.WCExpFile);
+		if (string.equalsIgnoreCase("W")) {
+			level = Level.getLevel(player, "w");
+			stat = Level.getExp(player, "w");
+			expLeft = Level.getExpLeft(player, "w");
 			str = "Woodcut";
-		} else if (Settings.database.equalsIgnoreCase("flatfile")
-				&& string.equalsIgnoreCase("M")) {
-			level = LevelFunctions.getLevel(player, Levelcraft.MiExpFile);
-			stat = LevelFunctions.getExp(player, Levelcraft.MiExpFile);
-			expLeft = LevelFunctions.getExpLeft(player, Levelcraft.MiExpFile);
+		} else if (string.equalsIgnoreCase("M")) {
+			level = Level.getLevel(player, "m");
+			stat = Level.getExp(player, "m");
+			expLeft = Level.getExpLeft(player, "m");
 			str = "Mining";
-		} else if (Settings.database.equalsIgnoreCase("flatfile")
-				&& string.equalsIgnoreCase("S")) {
-			level = LevelFunctions.getLevel(player, Levelcraft.SlayExpFile);
-			stat = LevelFunctions.getExp(player, Levelcraft.SlayExpFile);
-			expLeft = LevelFunctions.getExpLeft(player, Levelcraft.SlayExpFile);
+		} else if (string.equalsIgnoreCase("S")) {
+			level = Level.getLevel(player, "s");
+			stat = Level.getExp(player, "s");
+			expLeft = Level.getExpLeft(player, "s");
 			str = "Slaying";
-		}  else if (Settings.database.equalsIgnoreCase("flatfile")
-				&& string.equalsIgnoreCase("R")) {
-			level = LevelFunctions.getLevel(player, Levelcraft.RangeExpFile);
-			stat = LevelFunctions.getExp(player, Levelcraft.RangeExpFile);
-			expLeft = LevelFunctions.getExpLeft(player, Levelcraft.RangeExpFile);
+		}  else if (string.equalsIgnoreCase("R")) {
+			level = Level.getLevel(player, "r");
+			stat = Level.getExp(player, "r");
+			expLeft = Level.getExpLeft(player, "r");
 			str = "Ranging";
-		}   else if (Settings.database.equalsIgnoreCase("flatfile")
-				&& string.equalsIgnoreCase("F")) {
-			level = LevelFunctions.getLevel(player, Levelcraft.FisticuffsExpFile);
-			stat = LevelFunctions.getExp(player, Levelcraft.FisticuffsExpFile);
-			expLeft = LevelFunctions.getExpLeft(player, Levelcraft.FisticuffsExpFile);
+		}   else if (string.equalsIgnoreCase("F")) {
+			level = Level.getLevel(player, "f");
+			stat = Level.getExp(player, "f");
+			expLeft = Level.getExpLeft(player, "f");
 			str = "Fisticuffs";
-		} else if (Settings.database.equalsIgnoreCase("sqlite")
-				&& string.equalsIgnoreCase("M")) {
-			level = DataSqlite.getLevel(player, "MiningExp");
-			stat = DataSqlite.getExp(player, "MiningExp");
-			expLeft = DataSqlite.getExpLeft(player, "MiningExp");
-			str = "Mining";
-		} else if (Settings.database.equalsIgnoreCase("sqlite")
-				&& string.equalsIgnoreCase("W")) {
-			level = DataSqlite.getLevel(player, "WoodcuttingExp");
-			stat = DataSqlite.getExp(player, "WoodcuttingExp");
-			expLeft = DataSqlite.getExpLeft(player, "WoodcuttingExp");
-			str = "Woodcutting";
-		} else if (Settings.database.equalsIgnoreCase("sqlite")
-				&& string.equalsIgnoreCase("S")) {
-			level = DataSqlite.getLevel(player, "SlayingExp");
-			stat = DataSqlite.getExp(player, "SlayingExp");
-			expLeft = DataSqlite.getExpLeft(player, "SlayingExp");
-			str = "Slaying";
-		} else if (Settings.database.equalsIgnoreCase("sqlite")
-				&& string.equalsIgnoreCase("R")) {
-			level = DataSqlite.getLevel(player, "RangingExp");
-			stat = DataSqlite.getExp(player, "RangingExp");
-			expLeft = DataSqlite.getExpLeft(player, "RangingExp");
-			str = "Ranging";
-		} else if (Settings.database.equalsIgnoreCase("sqlite")
-				&& string.equalsIgnoreCase("F")) {
-			level = DataSqlite.getLevel(player, "FisticuffsExp");
-			stat = DataSqlite.getExp(player, "FisticuffsExp");
-			expLeft = DataSqlite.getExpLeft(player, "FisticuffsExp");
-			str = "Fisticuffs";
-		} else if (Settings.database.equalsIgnoreCase("mysql")
-			&& string.equalsIgnoreCase("m")) {
-			level = DataMySql.getLevel(player, "MiningExp");
-			stat = DataMySql.getExp(player, "MiningExp");
-			expLeft = DataMySql.getExpLeft(player, "MiningExp");
-			str = "Mining";
-		} else if (Settings.database.equalsIgnoreCase("mysql")
-				&& string.equalsIgnoreCase("s")) {
-			level = DataMySql.getLevel(player, "SlayingExp");
-			stat = DataMySql.getExp(player, "SlayingExp");
-			expLeft = DataMySql.getExpLeft(player, "SlayingExp");
-			str = "Slaying";
-		} else if (Settings.database.equalsIgnoreCase("mysql")
-				&& string.equalsIgnoreCase("w")) {
-			level = DataMySql.getLevel(player, "WoodcuttingExp");
-			stat = DataMySql.getExp(player, "WoodcuttingExp");
-			expLeft = DataMySql.getExpLeft(player, "WoodcuttingExp");
-			str = "Woodcutting";
-		} else if (Settings.database.equalsIgnoreCase("mysql")
-				&& string.equalsIgnoreCase("r")) {
-			level = DataMySql.getLevel(player, "RangingExp");
-			stat = DataMySql.getExp(player, "RangingExp");
-			expLeft = DataMySql.getExpLeft(player, "RangingExp");
-			str = "Ranging";
-		} else if (Settings.database.equalsIgnoreCase("mysql")
-				&& string.equalsIgnoreCase("F")) {
-			level = DataMySql.getLevel(player, "FisticuffsExp");
-			stat = DataMySql.getExp(player, "FisticuffsExp");
-			expLeft = DataMySql.getExpLeft(player, "FisticuffsExp");
-			str = "Fisticuffs";
+		}   else if (string.equalsIgnoreCase("A")) {
+			level = Level.getLevel(player, "a");
+			stat = Level.getExp(player, "a");
+			expLeft = Level.getExpLeft(player, "a");
+			str = "Archery";
 		}
 		player.sendMessage(ChatColor.GOLD
 				+ "[LC] ---LevelCraftPlugin By Samkio--- ");
@@ -283,5 +209,4 @@ public class PlayerFunctions {
 		player.sendMessage(ChatColor.GOLD + "[LC] " + ChatColor.GREEN
 				+ "Experience left to next level: " + expLeft);
 	}
-
 }

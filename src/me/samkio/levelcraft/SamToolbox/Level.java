@@ -33,6 +33,11 @@ public class Level {
 						Levelcraft.FisticuffsExpFile);
 				return exp;
 			}
+			if (s.equalsIgnoreCase("a")) {
+				Double exp = LevelFunctions.getExp(p,
+						Levelcraft.ArcherExpFile);
+				return exp;
+			}
 		}
 
 		if (Settings.database.equalsIgnoreCase("mysql")) {
@@ -56,6 +61,10 @@ public class Level {
 				Double exp = DataMySql.getExp(p, "FisticuffsExp");
 				return exp;
 			}
+			if (s.equalsIgnoreCase("a")) {
+				Double exp = DataMySql.getExp(p, "ArcheryExp");
+				return exp;
+			}
 			return 0;
 		}
 		if (Settings.database.equalsIgnoreCase("sqlite")) {
@@ -77,6 +86,10 @@ public class Level {
 			}
 			if (s.equalsIgnoreCase("f")) {
 				Double exp = DataSqlite.getExp(p, "FisticuffsExp");
+				return exp;
+			}
+			if (s.equalsIgnoreCase("a")) {
+				Double exp = DataSqlite.getExp(p, "ArcheryExp");
 				return exp;
 			}
 		}
@@ -107,6 +120,11 @@ public class Level {
 						Levelcraft.FisticuffsExpFile);
 				return level;
 			}
+			if (s.equalsIgnoreCase("a")) {
+				int level = LevelFunctions.getLevel(p,
+						Levelcraft.ArcherExpFile);
+				return level;
+			}
 		}
 
 		if (Settings.database.equalsIgnoreCase("mysql")) {
@@ -130,6 +148,10 @@ public class Level {
 				int level = DataMySql.getLevel(p, "FisticuffsExp");
 				return level;
 			}
+			if (s.equalsIgnoreCase("a")) {
+				int level = DataMySql.getLevel(p, "ArcheryExp");
+				return level;
+			}
 			return 0;
 		}
 		if (Settings.database.equalsIgnoreCase("sqlite")) {
@@ -151,6 +173,10 @@ public class Level {
 			}
 			if (s.equalsIgnoreCase("f")) {
 				int level = DataSqlite.getLevel(p, "FisticuffsExp");
+				return level;
+			}
+			if (s.equalsIgnoreCase("a")) {
+				int level = DataSqlite.getLevel(p, "ArcheryExp");
 				return level;
 			}
 		}
@@ -182,6 +208,11 @@ public class Level {
 						Levelcraft.FisticuffsExpFile);
 				return exp;
 			}
+			if (s.equalsIgnoreCase("a")) {
+				Double exp = LevelFunctions.getExpLeft(p,
+						Levelcraft.ArcherExpFile);
+				return exp;
+			}
 		}
 
 		if (Settings.database.equalsIgnoreCase("mysql")) {
@@ -203,6 +234,10 @@ public class Level {
 			}
 			if (s.equalsIgnoreCase("f")) {
 				Double exp = DataMySql.getExpLeft(p, "FisticuffsExp");
+				return exp;
+			}
+			if (s.equalsIgnoreCase("a")) {
+				Double exp = DataMySql.getExpLeft(p, "ArcheryExp");
 				return exp;
 			}
 			return 0;
@@ -228,7 +263,10 @@ public class Level {
 				Double exp = DataSqlite.getExpLeft(p, "FisticuffsExp");
 				return exp;
 			}
-		}
+			if (s.equalsIgnoreCase("a")) {
+				Double exp = DataSqlite.getExpLeft(p, "ArcheryExp");
+				return exp;
+			}		}
 		return 0;
 	}
 	public static boolean update(Player p, String s, Double exp) {
@@ -251,6 +289,10 @@ public class Level {
 			}
 			if (s.equalsIgnoreCase("f")) {
 				LevelFunctions.write(p, exp, Levelcraft.FisticuffsExpFile);
+				return true;
+			}
+			if (s.equalsIgnoreCase("a")) {
+				LevelFunctions.write(p, exp, Levelcraft.ArcherExpFile);
 				return true;
 			}
 		}
@@ -276,6 +318,10 @@ public class Level {
 				DataMySql.update(p, "FisticuffsExp", exp);
 				return true;
 			}
+			if (s.equalsIgnoreCase("a")) {
+				DataMySql.update(p, "ArcheryExp", exp);
+				return true;
+			}
 			return false;
 		}
 		if (Settings.database.equalsIgnoreCase("sqlite")) {
@@ -297,6 +343,10 @@ public class Level {
 			}
 			if (s.equalsIgnoreCase("f")) {
 				DataSqlite.update(p, "FisticuffsExp", exp);
+				return true;
+			}
+			if (s.equalsIgnoreCase("a")) {
+				DataSqlite.update(p, "ArcheryExp", exp);
 				return true;
 			}
 		}

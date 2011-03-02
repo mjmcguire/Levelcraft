@@ -3,6 +3,7 @@ package me.samkio.levelcraft.Listeners;
 
 import me.samkio.levelcraft.Levelcraft;
 import me.samkio.levelcraft.Settings;
+import me.samkio.levelcraft.Skills.Archer;
 import me.samkio.levelcraft.Skills.Fisticuffs;
 import me.samkio.levelcraft.Skills.Range;
 import me.samkio.levelcraft.Skills.Slayer;
@@ -28,13 +29,20 @@ public class LCEntityListener extends EntityListener{
 			if(((EntityDamageByProjectileEvent) event).getProjectile() instanceof Arrow && ((EntityDamageByEntityEvent) event).getDamager() instanceof Player && Settings.enableRangeLevel == true && event.getEntity() instanceof Monster){
 				Range.attack((EntityDamageByProjectileEvent) event);
 				return;
+			}else if(((EntityDamageByProjectileEvent) event).getDamager() instanceof Player && Settings.enableArcherLevel == true && event.getEntity() instanceof Player){
+				Player Damager = (Player) ((EntityDamageByProjectileEvent) event).getDamager();
+				Player Damagee = (Player) event.getEntity();
+				if(!(Damager.getName()==Damagee.getName())){
+					Archer.attack((EntityDamageByProjectileEvent) event);
+				}
+				return;
 			}
 		}
 		if (event instanceof EntityDamageByEntityEvent){
 				if(((EntityDamageByEntityEvent) event).getDamager() instanceof Player && Settings.enableSlayerLevel == true && event.getEntity() instanceof Monster){
 					Slayer.attack((EntityDamageByEntityEvent) event);
 					return;
-				} else if(((EntityDamageByEntityEvent) event).getDamager() instanceof Player && Settings.enableSlayerLevel == true && event.getEntity() instanceof Player){
+				} else if(((EntityDamageByEntityEvent) event).getDamager() instanceof Player && Settings.enableFisticuffsLevel == true && event.getEntity() instanceof Player){
 					Player Damager = (Player) ((EntityDamageByEntityEvent) event).getDamager();
 					Player Damagee = (Player) event.getEntity();
 					if(!(Damager.getName()==Damagee.getName())){

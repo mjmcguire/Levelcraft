@@ -11,6 +11,7 @@ public class Settings {
 	public static boolean enableRangeLevel;
 	public static boolean enableSlayerLevel;
 	public static boolean enableFisticuffsLevel;
+	public static boolean enableArcherLevel;
 	public static int WCWoodAxe;
 	public static int WCStoneAxe;
 	public static int WCIronAxe;
@@ -61,6 +62,13 @@ public class Settings {
 	public static int Range2p5;	
 	public static int Range3p0;
 
+	public static int Archerp5;
+	public static int Archer1p0;
+	public static int Archer1p5;	
+	public static int Archer2p0;
+	public static int Archer2p5;	
+	public static int Archer3p0;
+
 	public static int StoneLevel;
 	public static int CobbleLevel;
 	public static int IronLevel;
@@ -99,6 +107,7 @@ public class Settings {
 		enableSlayerLevel = properties.getBoolean("Enable-Slayer-Level", true);
 		enableRangeLevel = properties.getBoolean("Enable-Range-Level", true);
 		enableFisticuffsLevel = properties.getBoolean("Enable-Fisticuffs-Level", true);
+		enableArcherLevel = properties.getBoolean("Enable-Archer-Level", true);
 		Constant = properties.getInteger("Level-Constant", 20);
 		database = properties.getString("Database", "flatfile");
 		MySqlDir = properties.getString("MySqlDatabaseDirectory", "localhost:3306/LC");
@@ -194,6 +203,26 @@ public class Settings {
 		Range2p0 = properties.getInteger("Range-2.0-Damage", 20);
 		Range2p5 = properties.getInteger("Range-2.5-Damage", 30);
 		Range3p0 = properties.getInteger("Range-3.0-Damage", 50);
+
+		properties.save();
+	}
+
+	public static void loadArcher() {
+		String propertiesFile = Levelcraft.maindirectory
+				+ Levelcraft.configdirectory + "ArcherConfig.properties";
+		PropertyFunctions properties = new PropertyFunctions(propertiesFile);
+		try {
+			properties.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Archerp5 = properties.getInteger("Archer-.5-Damage", 0);
+		Archer1p0 = properties.getInteger("Archer-1.0-Damage", 5);
+		Archer1p5 = properties.getInteger("Archer-1.5-Damage", 10);
+		Archer2p0 = properties.getInteger("Archer-2.0-Damage", 20);
+		Archer2p5 = properties.getInteger("Archer-2.5-Damage", 30);
+		Archer3p0 = properties.getInteger("Archer-3.0-Damage", 50);
 
 		properties.save();
 	}
