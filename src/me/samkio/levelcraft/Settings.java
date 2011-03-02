@@ -98,7 +98,7 @@ public class Settings {
 		enableMineLevel = properties.getBoolean("Enable-Mining-Level", true);
 		enableSlayerLevel = properties.getBoolean("Enable-Slayer-Level", true);
 		enableRangeLevel = properties.getBoolean("Enable-Range-Level", true);
-		enableFisticuffsLevel = properties.getBoolean("Enable-Range-Level", true);
+		enableFisticuffsLevel = properties.getBoolean("Enable-Fisticuffs-Level", true);
 		Constant = properties.getInteger("Level-Constant", 20);
 		database = properties.getString("Database", "flatfile");
 		MySqlDir = properties.getString("MySqlDatabaseDirectory", "localhost:3306/LC");

@@ -1,11 +1,9 @@
 package me.samkio.levelcraft.Skills;
 
-import me.samkio.levelcraft.Levelcraft;
 import me.samkio.levelcraft.Settings;
-import me.samkio.levelcraft.Functions.LevelFunctions;
 import me.samkio.levelcraft.Functions.PlayerFunctions;
-import me.samkio.levelcraft.SamToolbox.DataMySql;
-import me.samkio.levelcraft.SamToolbox.DataSqlite;
+import me.samkio.levelcraft.SamToolbox.Level;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,17 +18,10 @@ public class Mine {
 		if (Settings.enableMineLevel == true) {
 			int level = 0;
 			double stat = 0;
-			if (Settings.database.equalsIgnoreCase("flatfile")) {
-				level = LevelFunctions.getLevel(player, Levelcraft.MiExpFile);
-				stat = LevelFunctions.getExp(player, Levelcraft.MiExpFile);
-			} else if (Settings.database.equalsIgnoreCase("sqlite")) {
-				stat = DataSqlite.getExp(player, "MiningExp");
-				level = DataSqlite.getLevel(player, "MiningExp");
-			}
-		 else if (Settings.database.equalsIgnoreCase("mysql")) {
-			stat = DataMySql.getExp(player, "MiningExp");
-			level = DataMySql.getLevel(player, "MiningExp");
-		}
+
+			level = Level.getLevel(player, "m");
+			stat = Level.getExp(player, "m");
+
 			if (level < Settings.MIIronPick && iih == 257) {
 				player.sendMessage(ChatColor.GOLD + "[LC]" + ChatColor.RED
 						+ " Cannot use this tool. Required Level:"
@@ -127,6 +118,7 @@ public class Mine {
 			} else if (event.getBlock().getType() == Material.STONE
 					|| event.getBlock().getType() == Material.COBBLESTONE
 					|| event.getBlock().getType() == Material.REDSTONE_ORE
+					|| event.getBlock().getType() == Material.GLOWING_REDSTONE_ORE
 					|| event.getBlock().getType() == Material.IRON_ORE
 					|| event.getBlock().getType() == Material.OBSIDIAN
 					|| event.getBlock().getType() == Material.GOLD_ORE
@@ -174,7 +166,7 @@ public class Mine {
 
 					stat = stat + Settings.ExpPerRedstone;
 				}
-                                if (event.getBlock().getType() == Material.GLOWING_REDSTONE_ORE) {
+				if (event.getBlock().getType() == Material.GLOWING_REDSTONE_ORE) {
 
 					stat = stat + Settings.ExpPerRedstone;
 				}
@@ -187,18 +179,8 @@ public class Mine {
 					stat = stat + Settings.ExpPerDiamondOre;
 				}
 				int aftlevel = 0;
-				if (Settings.database.equalsIgnoreCase("flatfile")) {
-					LevelFunctions.write(player, stat, Levelcraft.MiExpFile);
-					aftlevel = LevelFunctions.getLevel(player,
-							Levelcraft.MiExpFile);
-				} else if (Settings.database.equalsIgnoreCase("sqlite")) {
-					DataSqlite.update(player,"MiningExp",stat);
-					aftlevel = DataSqlite.getLevel(player, "MiningExp");
-				}
-				 else if (Settings.database.equalsIgnoreCase("mysql")) {
-						DataMySql.update(player,"MiningExp",stat);
-						aftlevel = DataMySql.getLevel(player, "MiningExp");
-					}
+				Level.update(player, "m", stat);
+				aftlevel = Level.getLevel(player, "m");
 				if (aftlevel > level) {
 					player.sendMessage(ChatColor.GOLD + "[LC]"
 							+ ChatColor.GREEN

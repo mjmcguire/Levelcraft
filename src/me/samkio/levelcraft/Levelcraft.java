@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import me.samkio.levelcraft.Functions.PlayerFunctions;
 import me.samkio.levelcraft.Listeners.LCBlockListener;
 import me.samkio.levelcraft.Listeners.LCEntityListener;
 import me.samkio.levelcraft.Listeners.LCPlayerListener;
@@ -11,7 +12,10 @@ import me.samkio.levelcraft.SamToolbox.DataMySql;
 import me.samkio.levelcraft.SamToolbox.DataSqlite;
 
 import org.bukkit.Server;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
+import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
@@ -62,6 +66,28 @@ public class Levelcraft extends JavaPlugin {
 
 	}
 
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+    	PlayerFunctions.checkAccount(sender);
+    	if (commandLabel.equalsIgnoreCase("level") | commandLabel.equalsIgnoreCase("lvl")) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+//    public boolean onCommand(CommandSender sender, Command cmd,
+//    		   String commandLabel, String[] args) {
+//    		  if ((commandLabel.equalsIgnoreCase("yt") || commandLabel
+//    		    .equalsIgnoreCase("yedit")) && args.length > 0) {
+//    		   if (Permissions.has((Player) sender, "yeditor.editor")) {
+//    		    commands.command(sender, cmd, commandLabel, args);
+//    		   }
+//
+//    		   return true;
+//    		  }
+//    		  return false;
+//
+//    		 }
+	
 	void load() {
 		new File(maindirectory).mkdirs();
 		new File(maindirectory + datadirectory).mkdirs();
@@ -78,12 +104,13 @@ public class Levelcraft extends JavaPlugin {
 		if (Settings.database.equalsIgnoreCase("flatfile")) {
 			
 			if (!WCExpFile.exists() || !MiExpFile.exists()
-					|| !SlayExpFile.exists() || !RangeExpFile.exists())
+					|| !SlayExpFile.exists() || !RangeExpFile.exists() || !FisticuffsExpFile.exists())
 				try {
 					WCExpFile.createNewFile();
 					MiExpFile.createNewFile();
 					SlayExpFile.createNewFile();
 					RangeExpFile.createNewFile();
+					FisticuffsExpFile.createNewFile();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -99,9 +126,7 @@ public class Levelcraft extends JavaPlugin {
 
 	void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
-
-		pm.registerEvent(Event.Type.PLAYER_COMMAND, this.playerListener,
-				Event.Priority.Normal, this);
+	
 		pm.registerEvent(Event.Type.ENTITY_DAMAGED,
 				this.entityListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.ENTITY_TARGET,

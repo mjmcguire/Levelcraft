@@ -8,8 +8,6 @@ import java.text.DecimalFormat;
 import java.util.Properties;
 
 import me.samkio.levelcraft.Settings;
-import me.samkio.levelcraft.SamToolbox.DataSqlite;
-
 import org.bukkit.entity.Player;
 
 
@@ -35,7 +33,6 @@ public class LevelFunctions {
 }
 	public static double getExp(Player p, File file) {
 		String player = p.getName();
-		if (Settings.database.equalsIgnoreCase("flatfile")) {
 			Properties pro = new Properties();
 			try {
 				FileInputStream in = new FileInputStream(file);
@@ -49,13 +46,7 @@ public class LevelFunctions {
 			catch (IOException e) {
 				System.out.println(e.getMessage());
 				}
-			}
-		else if (Settings.database.equalsIgnoreCase("sqlite")){
-			double exp = DataSqlite.getLevel(p, "WoodcuttingExp");
-		}
-		else if (Settings.database.equalsIgnoreCase("mysql")){
 			
-		}
 		return 0;
 	}
 	public static boolean containskey(Player p, File file) {
