@@ -11,50 +11,24 @@ import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 public class Archer {
 	public static void attack(EntityDamageByProjectileEvent event) {
 		Player player = (Player) event.getDamager();
-		Player victim = (Player) event.getEntity();
 		PlayerFunctions.checkAccount(player);
 		int level = 0;
 		double stat = 0;
-		int newhealth = 0;
 		if (Settings.enableRangeLevel == true) {
 			level = Level.getLevel(player, "a");
 			stat = Level.getExp(player, "a");
 			if (level >= Settings.Archerp5 && level < Settings.Archer1p0) {
-				newhealth = (victim.getHealth()+3);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				victim.setHealth(newhealth);
+				event.setDamage(1);
 			}else if(level >= Settings.Archer1p0 && level < Settings.Archer1p5){
-				newhealth = (victim.getHealth()+2);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				victim.setHealth(newhealth);
+				event.setDamage(2);
 			}else if(level >= Settings.Archer1p5 && level < Settings.Archer2p0){
-				newhealth = (victim.getHealth()+1);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				victim.setHealth(newhealth);
+				event.setDamage(3);
 			}else if(level >= Settings.Archer2p0 && level < Settings.Archer2p5){
-				newhealth = (victim.getHealth());
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				victim.setHealth(newhealth);
+				event.setDamage(4);
 			}else if(level >= Settings.Archer2p5 && level < Settings.Archer3p0){
-				newhealth = (victim.getHealth()-1);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				victim.setHealth(newhealth);
+				event.setDamage(5);
 			}else if(level >= Settings.Archer3p0){
-				newhealth = (victim.getHealth()-2);
-				if(newhealth<=0){
-					newhealth=0;
-				}
-				victim.setHealth(newhealth);
+				event.setDamage(6);
 			}
 			stat = stat + Settings.ExpPerDamage;
 			int aftlevel = 0;

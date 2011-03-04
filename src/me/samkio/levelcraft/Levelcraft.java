@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import me.samkio.levelcraft.Functions.PlayerFunctions;
 import me.samkio.levelcraft.Listeners.LCBlockListener;
 import me.samkio.levelcraft.Listeners.LCEntityListener;
 import me.samkio.levelcraft.Listeners.LCPlayerListener;
@@ -12,9 +11,6 @@ import me.samkio.levelcraft.SamToolbox.DataMySql;
 import me.samkio.levelcraft.SamToolbox.DataSqlite;
 
 import org.bukkit.Server;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
