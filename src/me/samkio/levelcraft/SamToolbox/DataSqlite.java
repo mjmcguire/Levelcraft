@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.samkio.levelcraft.Levelcraft;
@@ -80,18 +81,23 @@ public class DataSqlite {
 		}
 	}
 
-	public static void NewPlayer(Player player, double var) {
-		Connection conn = null;
-		Statement st = null;
-		String p = player.getName();
-		try {
-			conn = getConnection();
-			st = conn.createStatement();
-			st.executeUpdate("INSERT INTO ExperienceTable (PlayerName,WoodcuttingExp,MiningExp,SlayingExp,RangingExp,FisticuffsExp,ArcheryExp) VALUES ('"
-					+ p + "'," + var + "," + var + "," + var +"," + var +"," + var +"," + var +")");
-			conn.commit();
-		} catch (SQLException e) {
-			log.severe("[Levelcraft] Unable to add row database" + e);
+	public static void NewPlayer(CommandSender sender, double var) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Connection conn = null;
+			Statement st = null;
+			String p = player.getName();
+			try {
+				conn = getConnection();
+				st = conn.createStatement();
+				st.executeUpdate("INSERT INTO ExperienceTable (PlayerName,WoodcuttingExp,MiningExp,SlayingExp,RangingExp,FisticuffsExp,ArcheryExp) VALUES ('"
+						+ p + "'," + var + "," + var + "," + var +"," + var +"," + var +"," + var +")");
+				conn.commit();
+			} catch (SQLException e) {
+				log.severe("[Levelcraft] Unable to add row database" + e);
+			}
+		} else {
+			sender.sendMessage("Error: Cannot create new player!");
 		}
 	}
 
@@ -109,17 +115,22 @@ public class DataSqlite {
 		}
 	}
 
-	public static void update(Player player, String value,double newvalue) {
-		Connection conn = null;
-		Statement st = null;
-		String p = player.getName();
-		try {
-			conn = getConnection();
-			st = conn.createStatement();
-			st.executeUpdate("UPDATE ExperienceTable set "+value+" = '"+newvalue+"' WHERE PlayerName='"+p+"'");
-			conn.commit();
-		} catch (SQLException e) {
-			log.severe("[Levelcraft] Unable to update row database" + e);
+	public static void update(CommandSender sender, String value,double newvalue) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Connection conn = null;
+			Statement st = null;
+			String p = player.getName();
+			try {
+				conn = getConnection();
+				st = conn.createStatement();
+				st.executeUpdate("UPDATE ExperienceTable set "+value+" = '"+newvalue+"' WHERE PlayerName='"+p+"'");
+				conn.commit();
+			} catch (SQLException e) {
+				log.severe("[Levelcraft] Unable to update row database" + e);
+			}
+		} else {
+			sender.sendMessage("Error: Player could not be updated!");
 		}
 	}
 
@@ -131,8 +142,8 @@ public class DataSqlite {
 			conn = getConnection();
 			st = conn.createStatement();
 			ResultSet rs = st
-					.executeQuery("SELECT PlayerName FROM Players WHERE PlayerName=('"
-							+ value + "')");
+			.executeQuery("SELECT PlayerName FROM Players WHERE PlayerName=('"
+					+ value + "')");
 			while (rs.next()) {
 				name = rs.getString("PlayerName");
 			}
@@ -144,79 +155,103 @@ public class DataSqlite {
 		return name;
 	}
 
-	public static double getExp(Player player, String value) {
-		Connection conn = null;
-		Statement st = null;
-		String p = player.getName();
-		double level = 0;
-		try {
-			conn = getConnection();
-			st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT " + value
-					+ " FROM ExperienceTable WHERE PlayerName=('" + p + "')");
-			while (rs.next()) {
-				level = rs.getDouble(value);
+	public static double getExp(CommandSender sender, String value) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Connection conn = null;
+			Statement st = null;
+			String p = player.getName();
+			double level = 0;
+			try {
+				conn = getConnection();
+				st = conn.createStatement();
+				ResultSet rs = st.executeQuery("SELECT " + value
+						+ " FROM ExperienceTable WHERE PlayerName=('" + p + "')");
+				while (rs.next()) {
+					level = rs.getDouble(value);
+				}
+				conn.commit();
+				return level;
+			} catch (SQLException e) {
+				log.severe("[Levelcraft] Unable to get row database" + e);
 			}
-			conn.commit();
 			return level;
-		} catch (SQLException e) {
-			log.severe("[Levelcraft] Unable to get row database" + e);
+		} else {
+			sender.sendMessage("Error: Could not retrieve experience value!");
+			return 0;
 		}
-		return level;
 	}
 
-	public static int getLevel(Player p, String value) {
-		int level = 0;
-		double exp = getExp(p, value);
-		double constant = Settings.Constant;
-		constant = constant / 100;
-		for (int i = 1; i <= 1000; i++) {
-			double levelAti = (100 * (i * (i * constant)));
-			if (levelAti >= exp) {
-				level = i;
-				break;
+	public static int getLevel(CommandSender sender, String value) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			int level = 0;
+			double exp = getExp(player, value);
+			double constant = Settings.Constant;
+			constant = constant / 100;
+			for (int i = 1; i <= 1000; i++) {
+				double levelAti = (100 * (i * (i * constant)));
+				if (levelAti >= exp) {
+					level = i;
+					break;
+				}
 			}
+			return level;
+		} else {
+			sender.sendMessage("Error: Could not retrieve level value!");
+			return 0;
 		}
-		return level;
 	}
 
-	public static double getExpLeft(Player p, String value) {
-		double exp = getExp(p, value);
-		double getExpUp = 0;
-		double constant = Settings.Constant;
-		constant = constant / 100;
-		for (int i = 1; i <= 1000; i++) {
-			double levelAti = (100 * (i * (i * constant)));
-			if (levelAti >= exp) {
-				getExpUp = levelAti;
-				break;
+	public static double getExpLeft(CommandSender sender, String value) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			double exp = getExp(player, value);
+			double getExpUp = 0;
+			double constant = Settings.Constant;
+			constant = constant / 100;
+			for (int i = 1; i <= 1000; i++) {
+				double levelAti = (100 * (i * (i * constant)));
+				if (levelAti >= exp) {
+					getExpUp = levelAti;
+					break;
+				}
 			}
+			double leftExp = (getExpUp - exp);
+			double leftExp2 = Toolbox.roundTwoDecimals(leftExp);
+			return leftExp2;
+		} else {
+			sender.sendMessage("Error: Could not retrieve experience value!");
+			return 0;
 		}
-		double leftExp = (getExpUp - exp);
-		double leftExp2 = Toolbox.roundTwoDecimals(leftExp);
-        return leftExp2;
 	}
 
-	public static boolean PlayerExsists(Player player) {
-		Connection conn = null;
-		Statement st = null;
-		String p = player.getName();
-		boolean isTrue = false;
-		try {
-			conn = getConnection();
-			st = conn.createStatement();
-			ResultSet rs = st
-					.executeQuery("SELECT PlayerName FROM ExperienceTable WHERE PlayerName=('"
-							+ p + "')");
-			while (rs.next()) {
-				isTrue = true;
+	public static boolean PlayerExsists(CommandSender sender) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Connection conn = null;
+			Statement st = null;
+			String p = player.getName();
+			boolean isTrue = false;
+			try {
+				conn = getConnection();
+				st = conn.createStatement();
+				ResultSet rs = st
+				.executeQuery("SELECT PlayerName FROM ExperienceTable WHERE PlayerName=('"
+						+ p + "')");
+				while (rs.next()) {
+					isTrue = true;
+				}
+				conn.commit();
+				return isTrue;
+			} catch (SQLException e) {
+				log.severe("[Levelcraft] Unable to get row database" + e);
 			}
-			conn.commit();
 			return isTrue;
-		} catch (SQLException e) {
-			log.severe("[Levelcraft] Unable to get row database" + e);
+		} else {
+			sender.sendMessage("Error: Player does not exist!");
+			return false;
 		}
-		return isTrue;
 	}
-
 }
+

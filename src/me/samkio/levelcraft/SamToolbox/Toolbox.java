@@ -3,13 +3,14 @@ package me.samkio.levelcraft.SamToolbox;
 import java.text.DecimalFormat;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 //Toolbox by Samkio
 // (C) 2010
 
 public class Toolbox {
-	public static void sendMessage(Player player, String string, Boolean success) {
+	public static void sendMessage(CommandSender sender, String string, Boolean success) {
 		String prefix = ChatColor.GOLD + "[LC] ";
 		String msg = prefix;
 		if (success)
@@ -18,7 +19,7 @@ public class Toolbox {
 			msg = msg + ChatColor.RED;
 		}
 		msg = msg + string;
-		player.sendMessage(msg);
+		sender.sendMessage(msg);
 
 	}
 

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
+
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import me.samkio.levelcraft.Settings;
 import com.mysql.jdbc.ResultSetMetaData;
@@ -69,165 +71,199 @@ public class DataMySql {
 		}
 	}
 
-	public static void NewPlayer(Player player, double var) {
-		Connection conn = null;
-		Statement st = null;
-		String p = player.getName();
-		try {
-			conn = createConnection();
-			st = (Statement) conn.createStatement();
-
-			st.executeUpdate("INSERT INTO ExperienceTable (PlayerName,WoodcuttingExp,MiningExp,SlayingExp,RangingExp,FisticuffsExp,ArcheryExp) VALUES ('"
-					+ p + "'," + var + "," + var + "," + var + "," + var + "," + var + "," + var + ")");
-		} catch (SQLException ex) {
-			log.severe("[Levelcraft]: Could not insert row for mysql" + ": "
-					+ ex);
-			return;
-		} catch (ClassNotFoundException e) {
-			log.severe("[Levelcraft]: Database connector not found for mysql"
-					+ ": " + e);
-			return;
-		} finally {
+	public static void NewPlayer(CommandSender sender, double var) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Connection conn = null;
+			Statement st = null;
+			String p = player.getName();
 			try {
-				if (st != null) {
-					st.close();
-				}
-				if (conn != null)
-					conn.close();
+				conn = createConnection();
+				st = (Statement) conn.createStatement();
+				st.executeUpdate("INSERT INTO ExperienceTable (PlayerName,WoodcuttingExp,MiningExp,SlayingExp,RangingExp,FisticuffsExp,ArcheryExp) VALUES ('"
+						+ p + "'," + var + "," + var + "," + var + "," + var + "," + var + "," + var + ")");
 			} catch (SQLException ex) {
-				log.severe("[Levelcraft]: Failed to close connection");
+				log.severe("[Levelcraft]: Could not insert row for mysql" + ": "
+						+ ex);
+				return;
+			} catch (ClassNotFoundException e) {
+				log.severe("[Levelcraft]: Database connector not found for mysql"
+						+ ": " + e);
+				return;
+			} finally {
+				try {
+					if (st != null) {
+						st.close();
+					}
+					if (conn != null)
+						conn.close();
+				} catch (SQLException ex) {
+					log.severe("[Levelcraft]: Failed to close connection");
+				}
 			}
+		} else {
+			sender.sendMessage("Error: Could not create player!");
 		}
 	}
 
-	public static double getExp(Player player, String value) {
-		Connection conn = null;
-		Statement st = null;
-		String p = player.getName();
-		double exp = 0;
-		try {
+	public static double getExp(CommandSender sender, String value) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Connection conn = null;
+			Statement st = null;
+			String p = player.getName();
+			double exp = 0;
+			try {
 
-			conn = createConnection();
+				conn = createConnection();
 
-			st = (Statement) conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT " + value
-					+ " FROM ExperienceTable WHERE PlayerName=('" + p + "')");
-			while (rs.next()) {
-				exp = rs.getDouble(value);
+				st = (Statement) conn.createStatement();
+				ResultSet rs = st.executeQuery("SELECT " + value
+						+ " FROM ExperienceTable WHERE PlayerName=('" + p + "')");
+				while (rs.next()) {
+					exp = rs.getDouble(value);
+				}
+				return exp;
+			} catch (SQLException e) {
+				log.severe("[Levelcraft] Unable to getExp player row database" + e);
+			} catch (ClassNotFoundException e) {
+				log.severe("[Levelcraft] Unable to getExp player row database" + e);
+			} finally {
+				try {
+					if (st != null) {
+						st.close();
+					}
+					if (conn != null)
+						conn.close();
+				} catch (SQLException ex) {
+					log.severe("[Levelcraft]: Failed to close connection");
+				}
 			}
 			return exp;
-		} catch (SQLException e) {
-			log.severe("[Levelcraft] Unable to getExp player row database" + e);
-		} catch (ClassNotFoundException e) {
-			log.severe("[Levelcraft] Unable to getExp player row database" + e);
-		} finally {
-			try {
-				if (st != null) {
-					st.close();
+		} else {
+			sender.sendMessage("Error: Could not retrieve experience value!");
+			return 0;
+		}
+	}
+
+	public static int getLevel(CommandSender sender, String value) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			int level = 0;
+			double exp = getExp(player, value);
+			double constant = Settings.Constant;
+			constant = constant / 100;
+			for (int i = 1; i <= 1000; i++) {
+				double levelAti = (100 * (i * (i * constant)));
+				if (levelAti >= exp) {
+					level = i;
+					break;
 				}
-				if (conn != null)
-					conn.close();
-			} catch (SQLException ex) {
-				log.severe("[Levelcraft]: Failed to close connection");
 			}
+			return level;
+		} else {
+			sender.sendMessage("Error: Could not retrieve level value!");
+			return 0;
 		}
-		return exp;
-	}
-	public static int getLevel(Player p, String value) {
-		int level = 0;
-		double exp = getExp(p, value);
-		double constant = Settings.Constant;
-		constant = constant / 100;
-		for (int i = 1; i <= 1000; i++) {
-			double levelAti = (100 * (i * (i * constant)));
-			if (levelAti >= exp) {
-				level = i;
-				break;
-			}
-		}
-		return level;
 	}
 
-	public static double getExpLeft(Player p, String value) {
-		double exp = getExp(p, value);
-		double getExpUp = 0;
-		double constant = Settings.Constant;
-		constant = constant / 100;
-		for (int i = 1; i <= 1000; i++) {
-			double levelAti = (100 * (i * (i * constant)));
-			if (levelAti >= exp) {
-				getExpUp = levelAti;
-				break;
+	public static double getExpLeft(CommandSender sender, String value) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			double exp = getExp(player, value);
+			double getExpUp = 0;
+			double constant = Settings.Constant;
+			constant = constant / 100;
+			for (int i = 1; i <= 1000; i++) {
+				double levelAti = (100 * (i * (i * constant)));
+				if (levelAti >= exp) {
+					getExpUp = levelAti;
+					break;
+				}
 			}
+			double leftExp = (getExpUp - exp);
+			double leftExp2 = Toolbox.roundTwoDecimals(leftExp);
+			return leftExp2;
+		} else {
+			sender.sendMessage("Error: Could not retrieve experience value!");
+			return 0;
 		}
-		double leftExp = (getExpUp - exp);
-		double leftExp2 = Toolbox.roundTwoDecimals(leftExp);
-        return leftExp2;
 	}
-	public static boolean PlayerExsists(Player player) {
-		Connection conn = null;
-		Statement st = null;
-		String p = player.getName();
-		boolean isTrue = false;
-		try {
 
-			conn = createConnection();
+	public static boolean PlayerExsists(CommandSender sender) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Connection conn = null;
+			Statement st = null;
+			String p = player.getName();
+			boolean isTrue = false;
+			try {
 
-			st = (Statement) conn.createStatement();
-			ResultSet rs = st
-					.executeQuery("SELECT PlayerName FROM ExperienceTable WHERE PlayerName=('"
-							+ p + "')");
-			while (rs.next()) {
-				isTrue = true;
+				conn = createConnection();
+
+				st = (Statement) conn.createStatement();
+				ResultSet rs = st
+				.executeQuery("SELECT PlayerName FROM ExperienceTable WHERE PlayerName=('"
+						+ p + "')");
+				while (rs.next()) {
+					isTrue = true;
+				}
+				return isTrue;
+			} catch (SQLException e) {
+				log.severe("[Levelcraft] Unable to check player row database" + e);
+			} catch (ClassNotFoundException e) {
+				log.severe("[Levelcraft] Unable to check player row database" + e);
+			} finally {
+				try {
+					if (st != null) {
+						st.close();
+					}
+					if (conn != null)
+						conn.close();
+				} catch (SQLException ex) {
+					log.severe("[Levelcraft]: Failed to close connection");
+				}
 			}
 			return isTrue;
-		} catch (SQLException e) {
-			log.severe("[Levelcraft] Unable to check player row database" + e);
-		} catch (ClassNotFoundException e) {
-			log.severe("[Levelcraft] Unable to check player row database" + e);
-		} finally {
-			try {
-				if (st != null) {
-					st.close();
-				}
-				if (conn != null)
-					conn.close();
-			} catch (SQLException ex) {
-				log.severe("[Levelcraft]: Failed to close connection");
-			}
-		}
-		return isTrue;
-	}
-
-	public static void update(Player player, String value,double newvalue) {
-		Connection conn = null;
-		Statement st = null;
-		String p = player.getName();
-		try {
-			conn = createConnection();
-			st = (Statement) conn.createStatement();
-
-			st.executeUpdate("UPDATE ExperienceTable set "+value+" = '"+newvalue+"' WHERE PlayerName='"+p+"'");
-		} catch (SQLException ex) {
-			log.severe("[Levelcraft]: Could not delete row for mysql" + ": " + ex);
-			return;
-		} catch (ClassNotFoundException e) {
-			log.severe("[Levelcraft]: Database connector not found for mysql" + ": "
-					+ e);
-			return;
-		} finally {
-			try {
-				if (st != null) {
-					st.close();
-				}
-				if (conn != null)
-					conn.close();
-			} catch (SQLException ex) {
-				log.severe("[Levelcraft]: Failed to close connection");
-			}
+		} else {
+			sender.sendMessage("Error: Player does not exist!");
+			return false;
 		}
 	}
 
+	public static void update(CommandSender sender, String value,double newvalue) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Connection conn = null;
+			Statement st = null;
+			String p = player.getName();
+			try {
+				conn = createConnection();
+				st = (Statement) conn.createStatement();
+
+				st.executeUpdate("UPDATE ExperienceTable set "+value+" = '"+newvalue+"' WHERE PlayerName='"+p+"'");
+			} catch (SQLException ex) {
+				log.severe("[Levelcraft]: Could not delete row for mysql" + ": " + ex);
+				return;
+			} catch (ClassNotFoundException e) {
+				log.severe("[Levelcraft]: Database connector not found for mysql" + ": "
+						+ e);
+				return;
+			} finally {
+				try {
+					if (st != null) {
+						st.close();
+					}
+					if (conn != null)
+						conn.close();
+				} catch (SQLException ex) {
+					log.severe("[Levelcraft]: Failed to close connection");
+				}
+			}
+		} else {
+			sender.sendMessage("Error: Could not update player!");
+		}
+	}
 	public static void UpdateRow() {
 		Connection conn = null;
 		Statement st = null;

@@ -4,13 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import me.samkio.levelcraft.Functions.PlayerFunctions;
 import me.samkio.levelcraft.Listeners.LCBlockListener;
 import me.samkio.levelcraft.Listeners.LCEntityListener;
 import me.samkio.levelcraft.Listeners.LCPlayerListener;
 import me.samkio.levelcraft.SamToolbox.DataMySql;
 import me.samkio.levelcraft.SamToolbox.DataSqlite;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
@@ -41,10 +45,14 @@ public class Levelcraft extends JavaPlugin {
 	public static File ArcherExpFile = new File(maindirectory + datadirectory
 			+ "Archer.exp");
 
-	public Levelcraft(PluginLoader pluginLoader, Server instance,
+/*	public Levelcraft(PluginLoader pluginLoader, Server instance,
 			PluginDescriptionFile desc, File folder, File plugin,
 			ClassLoader cLoader) {
 		super();
+	}
+*/
+	public Levelcraft(){
+		
 	}
 
 	@Override
@@ -63,32 +71,29 @@ public class Levelcraft extends JavaPlugin {
 				+ pdfFile.getVersion() + " is enabled!");
 
 	}
-/*
- * I have no idea what you guys are trying to do, but I took this out because commands don't work now -Bill
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-    	if (sender instanceof Player){
-        	PlayerFunctions.checkAccount((Player) sender);    		
-    	}
-    	if (commandLabel.equalsIgnoreCase("level") | commandLabel.equalsIgnoreCase("lvl")) {
-    		return true;
-    	}
-    	return false;
+        PlayerFunctions.checkAccount(sender);
+        if (commandLabel.equalsIgnoreCase("level") || commandLabel.equalsIgnoreCase("lvl")) {
+        	if (args.length >= 1) {
+        		PlayerFunctions.doThis(sender, args, this);
+        		return true;
+        	} else {
+        		About(sender);
+        		return false;
+        	}
+        } else {
+        	return false;
+        }
     }
-*/    
-//    public boolean onCommand(CommandSender sender, Command cmd,
-//    		   String commandLabel, String[] args) {
-//    		  if ((commandLabel.equalsIgnoreCase("yt") || commandLabel
-//    		    .equalsIgnoreCase("yedit")) && args.length > 0) {
-//    		   if (Permissions.has((Player) sender, "yeditor.editor")) {
-//    		    commands.command(sender, cmd, commandLabel, args);
-//    		   }
-//
-//    		   return true;
-//    		  }
-//    		  return false;
-//
-//    		 }
-	
+    public static void About(CommandSender sender) {
+    	sender.sendMessage(ChatColor.GOLD + "[LC] ---LevelCraftPlugin By Samkio (C)2011--- ");
+    	sender.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl list - Shows active stats.");
+    	sender.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl [w|m|s|r|f|a] - Shows stats statisics.");
+    	sender.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl notify - Toggles notifications.");
+    	sender.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl unlocks [w|m|s|r|f|a] - Shows tool level unlocks.");
+    	sender.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl shout [w|m|s|r|f|a] - Display level to the server.");
+    	sender.sendMessage(ChatColor.GOLD + "[LC]" +ChatColor.YELLOW+ " /lvl or /level - Shows this.");
+    }
 	void load() {
 		new File(maindirectory).mkdirs();
 		new File(maindirectory + datadirectory).mkdirs();
@@ -129,9 +134,6 @@ public class Levelcraft extends JavaPlugin {
 
 	void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
-//add the following event back, remove when onCommand stuff is complete - Bill		
-		pm.registerEvent(Event.Type.PLAYER_COMMAND, this.playerListener,
-				         Event.Priority.Normal, this); 	
 		pm.registerEvent(Event.Type.ENTITY_DAMAGED,
 				this.entityListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.ENTITY_TARGET,
